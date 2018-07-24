@@ -1,0 +1,17 @@
+<script type="text/javascript">
+function updateUrl(title, url) {
+    if (typeof (history.pushState) != "undefined") {
+        var obj = { Title: title, Url: url };
+        history.pushState(obj, obj.Title, obj.Url);
+    } else {
+        alert("Your browser doesn't support HTML5.");
+    }
+}
+</script>
+<input type="button" value="/page/1/" onclick="updateUrl('MyPage1', '/page/1/');" />
+<input type="button" value="/page/2/" onclick="updateUrl('MyPage2', '/page/2/');" />
+<input type="button" value="/page/3/" onclick="updateUrl('MyPage3', '/page/3/');" />
+
+<input type="button" value="/page1.html" onclick="updateUrl('MyPage1', '/page1.html');" />
+<input type="button" value="/page2.html" onclick="updateUrl('MyPage2', '/page2.html');" />
+<input type="button" value="/page3.html" onclick="updateUrl('MyPage3', '/page3.html');" />

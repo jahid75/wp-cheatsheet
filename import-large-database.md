@@ -1,3 +1,6 @@
+MySQL commandline for AMPPS (OS X)
+--
+```/Applications/AMPPS/mysql/bin/mysql -u root -pmysql```
 
 A common use of mysqldump is for making a backup of an entire database:
 --

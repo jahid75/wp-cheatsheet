@@ -1,3 +1,4 @@
+<?php
 
 // Force certificate validation. You need a valid certificate in the site, self generated certificates are NOT VALID. 
 add_filter( 'https_local_ssl_verify', '__return_true' );

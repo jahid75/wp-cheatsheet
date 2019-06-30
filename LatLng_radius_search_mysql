@@ -1,0 +1,17 @@
+<?php
+
+// Copied from one of wordpress theme customization work,
+// so there may be some undefined variable here.
+// this is just for reference, need to modify before using it.
+
+global $wpdb;
+$current_lat = 12.111;
+$current_long = 32.11;
+
+$qry = "111.111 * DEGREES(ACOS(LEAST(COS(RADIANS($current_lat))* COS(RADIANS(pm1.meta_value))* COS(RADIANS($current_long - pm2.meta_value))+ SIN(RADIANS($current_lat))*  SIN(RADIANS(pm1.meta_value)), 1.0))) AS distance_in_km";
+ 
+$qry = "(((acos(sin(($current_lat*pi()/180)) * sin((pm1.meta_value*pi()/180))+cos(($current_lat*pi()/180)) * cos((pm1.meta_value*pi()/180)) * cos((($current_long- pm2.meta_value)*pi()/180))))*180/pi())*60*1.1515) as distance";
+ 
+$querystr = "SELECT DISTINCT(p.ID) as post_id,p.post_title,pm1.meta_value as property_latitude,pm2.meta_value as property_longitude,(((acos(sin(($current_lat*pi()/180)) * sin((pm1.meta_value*pi()/180))+cos(($current_lat*pi()/180)) * cos((pm1.meta_value*pi()/180)) * cos((($current_long- pm2.meta_value)*pi()/180))))*180/pi())*60*1.1515) as distance_in_miles FROM $wpdb->posts p, $wpdb->postmeta pm1,$wpdb->postmeta pm2 WHERE p.ID = pm1.post_id AND p.ID = pm2.post_id AND p.post_status = 'publish' AND p.post_type = 'property' AND pm1.meta_key = 'houzez_geolocation_lat' AND pm2.meta_key = 'houzez_geolocation_long'  HAVING distance_in_miles <= $location_radius ";
+ 
+$pageposts = $wpdb->get_results($querystr, OBJECT);

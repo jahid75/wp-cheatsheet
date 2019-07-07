@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Upload Image to media gallery
+ * @param $fileObj object of $_FILES
+ * @return bool|int|WP_Error
+ */
+function upload_image($fileObj) {
+    if ( ! function_exists( 'wp_handle_upload' ) ) {
+        require_once( ABSPATH . 'wp-admin/includes/file.php' );
+    }
+    $file = $fileObj;
+    $file_attr = wp_handle_upload($file, array('test_form' => false ));
+    if ( $file_attr && ! isset( $file_attr['error'] ) ) {
+        $attachment = array(
+            'guid'           => $file_attr['url'],
+            'post_mime_type' => $file_attr['type'],
+            'post_title'     => preg_replace('/\\.[^.]+$/', '', basename($file['name'])),
+            'post_content'   => '',
+            'post_status'    => 'inherit',
+            'post_author'    => get_current_user_id() // You can change this
+        );
+        $attach_id = wp_insert_attachment($attachment, $file_attr['file']);
+        // Adds file as attachment to WordPress
+        if ( ! is_wp_error( $attach_id ) ) {
+            if( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
+                require_once( ABSPATH . 'wp-admin/includes/image.php' );
+            }
+            wp_update_attachment_metadata( $attach_id, wp_generate_attachment_metadata( $attach_id, $file_attr['file'] ) );
+            // Save image as meta box.
+            return $attach_id;
+        }
+    }
+    return false;
+}

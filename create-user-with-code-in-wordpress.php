@@ -2,7 +2,7 @@
 
 /**
  * Create a user in wordpress.
- * Put this function into the functions.php in your active theme.
+ * Put this code into the functions.php in your active theme.
  * Then just visit the home page, it'll create a new user for you. 
  * You've to replace the information for $user_login, $email, $password & $role
  * 

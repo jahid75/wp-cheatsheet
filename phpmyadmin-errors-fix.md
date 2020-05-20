@@ -19,3 +19,6 @@ With:
     || (count($analyzed_sql_results['select_expr']) == 1)
         && ($analyzed_sql_results['select_expr'][0] == '*'))
 ```
+
+Reference URL:
+(https://stackoverflow.com/questions/48001569/phpmyadmin-count-parameter-must-be-an-array-or-an-object-that-implements-co)[https://stackoverflow.com/questions/48001569/phpmyadmin-count-parameter-must-be-an-array-or-an-object-that-implements-co]

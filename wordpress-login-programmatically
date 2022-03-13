@@ -1,0 +1,25 @@
+<?php
+
+// Pass a secret key and value as the query parameter to the URL to login
+
+$secret_key   = 'xxxxxxx'; // Example, you need to change this
+$secret_value = 'xxxxxxxxxx'; // Example, you need to change this
+
+if( isset($_GET[$secret_key ]) && $_GET[$secret_key] == $secret_value ){
+	add_action('init', function (){
+    
+    // Get the user details, you need to change the username 'xxxxxx' with the user you are trying to login
+		$user = get_user_by('login', 'xxxxxx');
+    
+		if($user){
+			clean_user_cache($user->ID);
+			wp_clear_auth_cookie();
+			wp_set_current_user($user->ID);
+			wp_set_auth_cookie($user->ID);
+			update_user_caches($user);
+
+			echo $user->display_name . ' Logged in';
+		}
+		//wp_die();
+	});
+}
